@@ -3,6 +3,7 @@ require('dotenv').config();
 
 const express = require('express');
 const db = require('./config/connection'); // Ensure this is properly configured to connect to MongoDB
+const routes = require('./routes'); // Import your routes
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -14,9 +15,8 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Social Network API!');
 });
 
-// Include your API routes (assuming you have them in a folder called routes)
-const routes = require('./routes'); // Make sure this file/folder exists and is properly configured
-app.use('/api', routes);
+// Use your routes (let '/api' be handled by routes/index.js)
+app.use(routes); // Removed '/api' prefix here
 
 // Listen for DB connection before starting the server
 db.once('open', () => {
